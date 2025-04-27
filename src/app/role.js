@@ -11,19 +11,21 @@ export default class Role {
                     'Authorization': `Bearer ${token}`,
                 }
             })
-            let response = await req.data;
-            
             
         }catch(e){
             try{
+                // console.log('aaaa');
+                
                 let req = await axios.get(URL+'/refresh', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     }
                 })
                 let response = await req.data;
-                // localStorage.setItem('token', response.access_token);
-                console.log(response);
+                console.log(response.access_token);
+                
+                localStorage.setItem('token', response.access_token);
+                // console.log(response);
 
                 
             }catch(e){

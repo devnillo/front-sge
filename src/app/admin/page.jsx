@@ -1,10 +1,5 @@
 'use client';
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { RiSchoolLine } from "react-icons/ri";
-import { FaPeopleGroup } from "react-icons/fa6";
-import { GrRestroomMen } from "react-icons/gr";
-
 import HeaderComponent from "../{components}/HeaderComponent";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,10 +7,12 @@ import { Smile } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Role from "../role";
-import Request from "../requests";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import Request from "@/app/requests";
+import {useEffect, useState} from "react";
 
 export default function AdminHomePage() {
+    const [aluno, setAluno] = useState();
     const [escolas, setEscolas] = useState([])
     const URL = 'http://127.0.0.1:8000/api'
     
@@ -69,7 +66,7 @@ export default function AdminHomePage() {
                 <div className="flex justify-between items-center mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
                     <h1>Administração</h1>
                     <Button variant={'blue'} asChild>
-                        <Link href={'/admin/relatorios'}>Relatórios</Link>
+                        <Link href='/admin/relatorios'>Relatórios</Link>
                     </Button>
                 </div>
                 <div className="cards grid grid-cols-12 gap-2">
