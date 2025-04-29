@@ -6,27 +6,27 @@ import ReactQuery from "./ReactQuery";
 
 dotenv.config();
 const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+    variable: "--font-poppins",
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
-  title: "SEGEM",
-  description: "Gerenciamento escolar municipal",
+    title: "SEGEM",
+    description: "Gerenciamento escolar municipal",
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="pt-br">
+    return (
+        <html lang="pt-br">
 
-        <body
-          className={`${poppins.className} antialiased`}
-          >
-            <ReactQuery>
-              {children}
-            </ReactQuery>
+        <body suppressHydrationWarning
+            className={`${poppins.className} antialiased`}
+        >
+        <ReactQuery>
+            {children}
+        </ReactQuery>
         </body>
-    </html>
-  );
+        </html>
+    );
 }

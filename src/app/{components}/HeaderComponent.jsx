@@ -5,10 +5,14 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa6";
 import { X } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import Link from "next/link";
 
 export default function HeaderComponent({ children }) {
   const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
+    // console.log(links);
+    
     if(!isOpen) {
       document.body.classList.add('overflow-hidden'); 
     }

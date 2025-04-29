@@ -30,38 +30,19 @@ export default function AdminHomePage() {
         role.check('admin')
         
     }, [])
+    const options = [
+
+        admin => {
+            name: 'Alunos'
+            href: '/admin/alunos'
+        }
+    ]
+        // title: 'Administração',
+    
     return (
         <div>
-            <HeaderComponent>
-                <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger className={'text-xl '}>Alunos</AccordionTrigger>
-                        <AccordionContent>
-                            <li>
-                                <a className="" href="">Cadastrar</a>
-                            </li>
-                        </AccordionContent>
-                        <AccordionContent>
-                            <li>
-                                <a href="">Mátricular</a>
-                            </li>
-                        </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger className={'text-xl '}>Escolas</AccordionTrigger>
-                        <AccordionContent>
-                            <li>
-                                <Link className="" href="admin/escola/cadastrar">Cadastrar</Link>
-                            </li>
-                        </AccordionContent>
-                        <AccordionContent>
-                            <li>
-                                <a href="">Gerenciar</a>
-                            </li>
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
-            </HeaderComponent>
+            <HeaderComponent links='oiii'/>
+                
             <main className="px-2 py-15">
                 <div className="flex justify-between items-center mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
                     <h1>Administração</h1>

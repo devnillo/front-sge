@@ -12,7 +12,7 @@ const buttonVariants = cva(
         default:
           "bg-primary text-white shadow-xs hover:bg-primary/90",
         blue:
-          "bg-blue-500 text-white shadow-xs hover:bg-blue-500/90",
+          "bg-primary-blue text-white shadow-xs hover:bg-blue-500/90",
         red:
           "bg-ref-500 text-white shadow-xs hover:bg-ref-500/90",
         yellow:
