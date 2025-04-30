@@ -11,10 +11,13 @@
 }
 
 @theme inline {
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-shape: var(--shape);
+  --color-blue-primary: #47728F;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -23,6 +26,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-blue: var(--primary-blue);
+  --color-gray: var(--gray);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -58,7 +62,9 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
   --primary: oklch(0.208 0.042 265.755);
-  --primary-blue: #0066FF;
+  --primary-blue: #0D6EFD;
+  --gray: #14274e;
+  --shape: #F7F9FD;
   --primary-black: oklch(0.208 0.042 265.755);
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
@@ -124,9 +130,9 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
+  /* body {
     @apply bg-gray-100 text-foreground;
-  }
+  } */
   h2{
     @apply text-2xl font-semibold text-primary;
   }
@@ -134,12 +140,24 @@
     @apply text-3xl font-semibold text-primary;
   }
   .error{
-  @apply text-red-500 text-sm italic;
+  @apply text-red-500 text-sm italic col-span-12 md:col-span-8;
   }
   button {
     @apply cursor-pointer;
   }
   label {
     @apply text-lg font-medium ;
+  }
+  .required{
+    @apply text-red-500;
+  }
+  .separador{
+    @apply col-span-12 text-lg text-gray-600 border-b-2;
+  }
+  .trigger{
+    @apply  hover:text-primary-blue text-xl;
+  }
+  .trigger-child{
+    @apply  hover:text-primary-blue ml-4 text-lg;
   }
 }

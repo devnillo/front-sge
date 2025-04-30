@@ -25,16 +25,15 @@ export default function HeaderComponent({ children }) {
   };
 
   return (
-    <>
-      <header className={`fixed z-10 top-0 ${isOpen? 'right-[100%]' : 'left-0'} bg-primary h-screen min-w-72 p-4 flex-col items-center text-white`}>
+      <header className={`z-10 bg-shape min-h-screen min-w-60 p-4 flex-col items-center text-gray`}>
         <div className="flex justify-between items-center">
-          <Button variant={'blue'} onClick={toggleMenu} className={`absolute ${isOpen? 'left-[102%]' : 'left-0 hidden'}`}>
+          {/* <Button variant={'blue'} onClick={toggleMenu} className={`absolute ${isOpen? 'left-[102%]' : 'left-0 hidden'}`}>
             <FaChevronRight size={20}/>
-          </Button>
-          <h2 className="text-2xl text-white">SEGEM</h2>
-          <Button onClick={toggleMenu} className={` bg-primary border-2`}>
+          </Button> */}
+          <h2 className="text-2xl">SEGEM</h2>
+          {/* <Button onClick={toggleMenu} className={` bg-primary border-2`}>
             <X />
-          </Button>
+          </Button> */}
         </div>
         <nav className="w-full">
           <ul className='w-full flex flex-col gap-4'>
@@ -42,6 +41,5 @@ export default function HeaderComponent({ children }) {
           </ul>
         </nav>
       </header>
-    </>
   )
 }
