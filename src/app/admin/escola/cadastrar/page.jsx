@@ -28,13 +28,12 @@ export default function CadastrarEscolaPage() {
         const user = JSON.parse(localStorage.getItem('user'));
         const token = localStorage.getItem('token');
         const URL = 'http://127.0.0.1:8000/api'
-        // console.log(data);
+        console.log(data);
         
         const req = await axios.post(`${URL}/escolas/register`,
             {
-                // password: data.password,
                 nome: data.nome,
-                codigo: data.codigo,
+                inep: data.inep,
                 email: data.email,               
                 municipio: data.municipio,
                 distrito: data.distrito,
@@ -115,7 +114,7 @@ export default function CadastrarEscolaPage() {
 
                             <FormField id={'email'} register={register} label={'Email da Escola'} placeholder={'sadasd'} error={errors.email?.message} required={true} cols={6}/>
                             
-                            <FormField id={'codigo'} register={register} label={'Código INEP'} placeholder={'sadasd'} error={errors.codigo?.message} required={true} cols={4}/>
+                            <FormField id={'inep'} register={register} label={'Código INEP'} placeholder={'sadasd'} error={errors.inep?.message} required={true} cols={4}/>
                             <div className="col-span-8">
                                 <label htmlFor="dependencia">Dependência Administrativa:</label>
                                     <Controller name="dependencia" control={control} render={({ field }) => (

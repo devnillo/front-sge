@@ -1,18 +1,10 @@
 'use client'
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { IoCloseSharp } from "react-icons/io5";
-import { FaChevronRight } from "react-icons/fa6";
-import { X } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Link from "next/link";
-
-export default function HeaderComponent({ children }) {
+export default function HeaderComponent({ menuItems = [], homeUri }) {
   const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
-    // console.log(links);
-    
     if(!isOpen) {
       document.body.classList.add('overflow-hidden'); 
     }
@@ -23,23 +15,32 @@ export default function HeaderComponent({ children }) {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  return (
-      <header className={`z-10 bg-shape min-h-screen min-w-60 p-4 flex-col items-center text-gray`}>
-        <div className="flex justify-between items-center">
-          {/* <Button variant={'blue'} onClick={toggleMenu} className={`absolute ${isOpen? 'left-[102%]' : 'left-0 hidden'}`}>
-            <FaChevronRight size={20}/>
-          </Button> */}
-          <h2 className="text-2xl">SEGEM</h2>
-          {/* <Button onClick={toggleMenu} className={` bg-primary border-2`}>
-            <X />
-          </Button> */}
-        </div>
-        <nav className="w-full">
-          <ul className='w-full flex flex-col gap-4'>
-            {children}
-          </ul>
+return (
+    <header className={`z-10 bg-shape min-h-screen min-w-60 p-4 flex-col items-center text-gray`}>
+        <h2 className="text-2xl">SEGEM</h2>
+        <nav className="w-full mt-10">
+            <Accordion type="single" collapsible className="w-full">
+                <Link href={homeUri? homeUri : '/'} className={'text-left font-medium py-2 hover:text-primary-blue text-xl'}>Home</Link>
+                {menuItems.map((item, index) => (
+                    <AccordionItem key={index} value={`item-${index}`}>
+                        <AccordionTrigger className="text-left font-medium py-2 hover:text-primary-blue text-xl">
+                            {item.title}
+                        </AccordionTrigger>
+                        <AccordionContent className="flex flex-col pl-4">
+                            <ul className="space-y-1">
+                                {item.links.map((link, i) => (
+                                    <li key={i}>
+                                        <Link href={link.href} className="text-lg text-gray hover:text-primary-blue">
+                                            {link.label}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                ))}
+            </Accordion>
         </nav>
-      </header>
-  )
+  </header>
+)
 }

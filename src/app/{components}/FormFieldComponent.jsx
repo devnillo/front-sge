@@ -9,7 +9,7 @@ export const FormField = ({
   error,
   register,
   cols = 12,
-  className =  `col-span-12 md:col-span-${cols}`,
+  className =  `col-span-${cols} max-lg:col-span-12`,
   
 }) => {
   return (

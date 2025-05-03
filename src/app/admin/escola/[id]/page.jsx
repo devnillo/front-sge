@@ -6,7 +6,7 @@ import { useParams } from "next/navigation"
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import Link from "next/link";
 import {Input} from "@/components/ui/input";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Controller, useForm} from "react-hook-form";
 import z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { escolaSchema } from "@/app/escolaSchema";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FormField } from "@/app/{components}/FormFieldComponent";
+import {LoadingComponent} from "@/app/{components}/LoadingComponent";
 
 
 export default function Escola() {
@@ -28,7 +29,6 @@ export default function Escola() {
         const user_data = localStorage.getItem('user')
         setUser(user_data)
     }
-    
 
     const { data, isLoading, refetch, isRefetching  } = useQuery({
         queryKey: ['escola'],
@@ -40,13 +40,12 @@ export default function Escola() {
     })
     const {watch, control, handleSubmit, reset, register, setError,formState: { errors } } = useForm({
         resolver: zodResolver(schema),
-       
         shouldFocusError: true
     })
     const nome = watch('nome')
     const email = watch('email')
     const endereco = watch('endereco')
-    const codigo = watch('codigo')
+    const inep = watch('inep')
     const municipio = watch('municipio')
     const distrito = watch('distrito')
     const cep = watch('cep')
@@ -55,19 +54,12 @@ export default function Escola() {
     const bairro = watch('bairro')
     const dependencia = watch('dependencia')
 
-
-    
-    // const [email, setEmail] = useState(data?.email || "");
-    // const [name, setName] = useState(data?.name || "");
-
-
-
     useEffect(() => {
         if(data){   
             reset({
                 nome: data.nome,
                 email: data.email,
-                codigo: data.codigo,
+                inep: data.inep,
                 municipio: data.municipio,
                 distrito: data.distrito,
                 cep: data.cep,
@@ -86,7 +78,7 @@ export default function Escola() {
             const req = await axios.post(`${URL}/escolas/editar/${id}`, {
                 nome,
                 email,
-                codigo,
+                inep,
                 municipio,
                 distrito,
                 cep,
@@ -101,24 +93,13 @@ export default function Escola() {
         onSuccess: () => {
             queryClient.invalidateQueries('escola')
         },
-        onError: (error) => {
-            console.log(error);
-            
-        }
     })
     async function handleSubmitForm(data)
     {
         mutation.mutate(data)
-        // console.log(data)
     }
-
     if(isLoading) {
-        return <h1>Carregando...</h1>
-    }
-    if(mutation.isPending){
-
-        return <h1>Carregando...</h1>
-
+        return <LoadingComponent />
     }
     return(
         <div className="flex flex-row">
@@ -153,24 +134,22 @@ export default function Escola() {
 
                 </Accordion>
             </HeaderComponent>
-            <main className='mx-2 w-full'>
+            <main className={`mx-2 w-full ${mutation.isPending? 'animate-pulse' : ''}`} >
                 <div className={'content'}>               
                     <div className="main bg-white py-10 px-4 mt-2 border-2 rounded-sm">
                         <h2>Editar dados da escola: {data.nome.toUpperCase()}</h2>
                         <p className={'text-gray-600'}>Atenção: Alterar esses dados afetará o cadastro da escola no sistema.</p>
                         <Tabs defaultValue="basico" className="w-full mt-2">
                             <TabsList className={'grid grid-cols-12 gap-2 justify-center items-center w-full h-14'}>
-                                <TabsTrigger className={'col-span-4 min-w-52'} value="basico">Dados Básicos</TabsTrigger>
-                                <TabsTrigger className={'col-span-4 min-w-52'} value="pessoas">Usuários</TabsTrigger>
-                                <TabsTrigger className={'col-span-4 min-w-52'} value="password">Infraestrutura</TabsTrigger>
+                                <TabsTrigger className={'col-span-6 min-w-52'} value="basico">Dados Básicos</TabsTrigger>
+                                <TabsTrigger className={'col-span-6 min-w-52'} value="diretor">Diretor</TabsTrigger>
+                                {/*<TabsTrigger className={'col-span-4 min-w-52'} value="password">Infraestrutura</TabsTrigger>*/}
                             </TabsList>
                             <TabsContent  value="basico" className={'col-span-12'}>
                                 <form onSubmit={handleSubmit(handleSubmitForm)} className={' grid grid-cols-12 gap-x-2 gap-y-4 mt-4'} >
-                                    <FormField id={'nome'} register={register} label={'Nome da Escola'} placeholder={'sadasd'} error={errors.nome?.message} required={true} cols={6}/>
-                                    
-                                    <FormField id={'email'} register={register} label={'Email da Escola'} placeholder={'sadasd'} error={errors.email?.message} required={true} cols={6}/>
-                                    
-                                    <FormField id={'codigo'} register={register} label={'Código INEP'} placeholder={'sadasd'} error={errors.codigo?.message} required={true} cols={4}/>
+                                    <FormField id={'nome'} register={register} label={'Nome da Escola'} placeholder={'Nome oficial da escola'} error={errors.nome?.message} required={true} cols={6}/>
+                                    <FormField id={'email'} register={register} label={'Email da Escola'} placeholder={'Email da escola'} error={errors.email?.message} required={true} cols={6}/>
+                                    <FormField id={'inep'} register={register} label={'Código INEP'} placeholder={'Código iNEP da escola'} error={errors.inep?.message} required={true} cols={4}/>
                                     <div className="col-span-8">
                                         <label htmlFor="dependencia">Dependência Administrativa:</label>
                                             <Controller name="dependencia" control={control} render={({ field }) => (
@@ -212,7 +191,9 @@ export default function Escola() {
                                     </Button>
                                 </form>
                             </TabsContent>
-                            <TabsContent value="password">Change your password here.</TabsContent>
+                            <TabsContent value="diretor">
+
+                            </TabsContent>
                         </Tabs>
                     </div>
                 </div>

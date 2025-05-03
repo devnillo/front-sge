@@ -26,38 +26,25 @@ export default function AdminHomePage() {
         const role = new Role()
         role.check('admin')
     }, [])
-    
+    const menuItems = [
+        {
+            title: "Alunos",
+            links: [
+                { href: "/relatorios/escola/", label: "Escolas" },
+                { href: "/gerenciar/alunos", label: "Gerenciar" },
+            ],
+        },
+        {
+            title: "Relatórios",
+            links: [
+                { href: "/relatorios/escola/", label: "Escolas" },
+                { href: "/gerenciar/relatorios", label: "Gerenciar" },
+            ],
+        },
+    ];
     return (
         <div className="flex gap-2">
-            <HeaderComponent>
-                <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="item-1">
-                        <AccordionTrigger className='trigger'>Alunos</AccordionTrigger>
-                        <AccordionContent className={'flex flex-col'}>
-                            <li className="trigger-child">
-                                <Link  href={`/relatorios/escola/`}>Escolas</Link>
-                            </li>
-                            <li className="trigger-child">
-                                <a href="">Gerenciar</a>
-                            </li>
-                        </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-2">
-                        <AccordionTrigger className='trigger'>Relátorios</AccordionTrigger>
-                        <AccordionContent className={'flex flex-col'}>
-                            <li className="trigger-child">
-                                <Link  href={`/relatorios/escola/`}>Escolas</Link>
-                            </li>
-                            <li className="trigger-child">
-                                <a href="">Gerenciar</a>
-                            </li>
-                        </AccordionContent>
-                        {/* </AccordionContent> */}
-                    </AccordionItem>
-
-                </Accordion>
-            </HeaderComponent>
-                
+            <HeaderComponent menuItems={menuItems} homeUri={'/admin'}/>
             <main className="px-2 py-14 w-full">
                 <div className="flex justify-between items-center mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
                     <h1>Administração</h1>
@@ -84,12 +71,12 @@ export default function AdminHomePage() {
                 </div>
                 <div className="escolas flex flex-col gap-2">
                     {isLoading ? (
-                        <div className="w-full bg-slate-100 py-10 text-center">
+                        <div className="w-full bg-shape py-10 text-center">
                             <span className="text-2xl">Carregando...</span>
                         </div>
                         ) : data.length ? (
                             data.map((escola) => (
-                        <div key={escola.id} className={`border-b-2 escola p-2 rounded-t-md bg-white flex justify-between items-center ${
+                        <div key={escola.id} className={`border-b-2 escola p-2 rounded-t-md bg-shape flex justify-between items-center ${
                             isRefetching ? "animate-pulse" : ""
                             }`}>
                             <p className="font-medium">{escola.nome}</p>
